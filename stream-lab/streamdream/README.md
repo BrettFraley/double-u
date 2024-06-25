@@ -1,27 +1,15 @@
 # streamdream
 
-TODO: Write a description here
+An attempt at developing a 'better' OBS
+Currently "unlicensed"
 
-## Installation
+temporary notes:
 
-TODO: Write installation instructions here
+- lbgphoto2 and ffmpeg needs:
+```
+libgphoto2-6,
+libgphoto2-dev,
+libgphoto2-port12,
+ffmpeg
+```
 
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
-
-## Contributing
-
-1. Fork it (<https://github.com/your-github-user/streamdream/fork>)
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
-
-## Contributors
-
-- [BrettFraley](https://github.com/your-github-user) - creator and maintainer

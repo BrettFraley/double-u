@@ -8,6 +8,14 @@ targets:
   streamdream:
     main: src/streamdream.cr
 
+dependencies:
+  ffmpeg:
+    github: spider-gazelle/ffmpeg
+
+  gphoto2:
+    github: Sija/gphoto2.c
+    
+
 crystal: '>= 1.12.2'
 
 license: MIT
