@@ -1,0 +1,13 @@
+name: double-u
+version: 0.1.0
+
+authors:
+  - BrettFraley <brettfraley@proton.me>
+
+targets:
+  double-u:
+    main: src/double-u.cr
+
+crystal: '>= 1.12.2'
+
+license: MIT
