@@ -1,19 +1,26 @@
 require "option_parser"
+require "sqlite3"
 
 module Double::U
   VERSION = "0.1.0"
 
-  # REPL start, options parsing, basic commands
+  # LaunchREPL contains methods to initialize the REPL,
+  # options parsing, basic command interpretter, and interactive runtime.
+  # At this eary stageof the development, I'm unsure if this is both 
+  # a user feature, or a kind of exploratory playground to experiemnt the
+  # the languages design and interactions with SQLite and Elixir.
+  
   class LaunchRepl
-    
+    SQL = SQLSetup.new
+    DB = DB.open "sqlite3://.main.db"
+
     def open
-      
+        puts SQL
         option_parser = OptionParser.parse do |parser|
           parser.banner = "* * * * D O U B L E - U * * * *"
         
-
             parser.on "-v", "--version", "Show version" do
-                puts "version"
+                puts VERSION
                 exit
             end
 
@@ -34,14 +41,21 @@ module Double::U
                 STDERR.puts parser
                 exit(1)
             end
-        end
+          end
+
+          # Init events DB open
+          SQL.open_command_events_db()
+
     end
 
     def loop
         # NOTE: Build the idea of a command into a flexible
         # class using macros. For instance, the variables defined
         # as is below will be it's own command or entity type.
-        
+        # 
+        db = SQL.open_command_events_db()
+        puts db
+
         line = 0
         errors = [] of String
         previous_command = ""
@@ -60,16 +74,69 @@ module Double::U
             
             puts "Received current command: #{ current_command }"
             puts "Previous command was: #{ previous_command }"
+
+            SQL.write_command_event("REPL", line, current_command, current_return)
+  
         end
+
     end
-
-
 
   end # !LaunchREPL
 
-repl = LaunchRepl.new
+  # SQLSetup contains methods that implment an experiment
+  # in using SQLite as a kind program runtime engine. In some
+  # clever I hope to implement pause, rewind, replay, and other
+  # dynamic features in double-u
+  # 
+  # https://github.com/crystal-lang/crystal-sqlite3
+  # 
+  # Important:
+  # Time is implemented as TEXT column using
+  # SQLite3::DATE_FORMAT_SUBSECOND format 
+  # (or SQLite3::DATE_FORMAT_SECOND if the text does not
+  # contain a dot).
+  # Bool is implemented as INT column mapping 0/1 values.
+  # 
+  # This is maybe a detail that lends itself better for Elixir
+  # to interact with the runtime database, where generated data
+  # is passed to ELixir then to the databse system.
+  # 
+  class SQLSetup
+
+    def open_command_events_db 
+      DB.open "sqlite3://./events.db" do |db|
+        db.exec "create table events if not exists (module text, line integer, command text, result text)"
+        db
+      end
+
+    end
+
+    def close_command_events_db
+      DB.close "sqlite3://./events.db"
+    end
+
+    def write_command_event(module_name, line_num, command, result)
+
+      db.exec "insert into contacts values (?, ?, ?, >)",
+        module_name, line_num, command, result
+
+      puts "Command Events:"
+      
+      db.query "select name, age from contacts order by age desc" do |rs|
+        puts "#{ rs.column_name(0)} #{rs.column_name(1)} #{rs.column_name(2)} #{rs.column_name(3)}"  
+      end
+    end
+
+  end #!SQLSetp
+
+  repl = LaunchRepl.new
+  sql = SQLSetup.new
+  # sql.testDB()
+
+
   repl.open()
   repl.loop()
-  
-end   # !module
 
+
+
+end #!module

@@ -8,6 +8,10 @@ targets:
   double-u:
     main: src/double-u.cr
 
+dependencies:
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3
+
 crystal: '>= 1.12.2'
 
 license: MIT
