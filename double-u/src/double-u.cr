@@ -1,35 +1,75 @@
-# TODO: Write documentation for `Double::U`
+require "option_parser"
+
 module Double::U
   VERSION = "0.1.0"
 
+  # REPL start, options parsing, basic commands
+  class LaunchRepl
+    
+    def open
+      
+        option_parser = OptionParser.parse do |parser|
+          parser.banner = "* * * * D O U B L E - U * * * *"
+        
+
+            parser.on "-v", "--version", "Show version" do
+                puts "version"
+                exit
+            end
+
+            parser.on "-h", "--help", "Show help" do
+                puts parser
+                exit
+            end
+
+            parser.missing_option do |option_flag|
+                STDERR.puts "ERROR: #{option_flag} is missing something."
+                STDERR.puts ""
+                STDERR.puts parser
+                exit(1)
+            end
+
+            parser.invalid_option do |option_flag|
+                STDERR.puts "ERROR: #{option_flag} is not a valid option."
+                STDERR.puts parser
+                exit(1)
+            end
+        end
+    end
+
+    def loop
+        # NOTE: Build the idea of a command into a flexible
+        # class using macros. For instance, the variables defined
+        # as is below will be it's own command or entity type.
+        
+        line = 0
+        errors = [] of String
+        previous_command = ""
+        current_command = ""
+        previous_return = ""
+        current_return = ""
+
+        until false
+            puts "\ndouble-u: "
+
+            line += 1
+            error = false
+
+            previous_command = line == 0 ? "" : current_command
+            current_command = gets
+            
+            puts "Received current command: #{ current_command }"
+            puts "Previous command was: #{ previous_command }"
+        end
+    end
+
+
+
+  end # !LaunchREPL
+
+repl = LaunchRepl.new
+  repl.open()
+  repl.loop()
   
-    # Experiments with task and function definitions from 'W' grammer
-     
-    macro define_writer(name, format_type, data, destination)
-        def {{name}}
-            data = {{content}}
-            format_type = {{ format_type }}
-            destination = {{ destination }}
-        end
-    end
+end   # !module
 
-    define_writer write_file, format 
-
-    ######################################################
-
-    macro define_method(name, content)
-        def {{name}}
-            {% if content == 1 %}
-                "one"
-            {% elsif content == 2 %}
-                "two"
-            {% else %}
-                {{content}}
-            {% end %}
-        end
-    end
-
-
-
-
-end

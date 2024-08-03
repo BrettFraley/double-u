@@ -66,6 +66,20 @@ Internals and internal supportive tooling
 
 - Channels, concurrency and parallelism
 
+Crystal based DSL. User program gets built as executable,
+and uses SQLlite as a kind of runtime manager. A 'side' layer of tooling written in Elixir uses Elixir 'ports' to
+interop with SQLite and the running program. I know,
+crazy idea, but am exploring this area.
+
+1. Get a very simple REPL working for reading and writing files with super basic grammar. All commands will directly
+translate into valid Crystal code, thus Crystal is our 
+target output format.
+
+2. Add the SQLite piece to understand a command and sequence
+of data manipulation tasks.
+
+3. Integrate Elixir for the basic file read/writes.
+
 
 
 

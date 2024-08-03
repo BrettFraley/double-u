@@ -80,3 +80,41 @@ greeting_for_alice "hello" # => "hello alice"
 greeting_for_bob "hallo"   # => "hallo bob"
 greeting_for_alice "hej"   # => "hej alice"
 greeting_for_bob "hola"    # => "¡hola bob!"
+
+
+
+
+
+
+
+
+
+4
+ # # Experiments with task and function definitions from 'W' grammer
+    
+    # # Defines a 'writer' type that accepts a format, data to write,
+    # # and a valid destination
+
+    # macro define_writer(name, format_type, data, destination)
+    #     def {{name}}
+    #         data = {{content}}
+    #         format_type = {{ format_type }}
+    #         destination = {{ destination }}
+    #     end
+    # end
+
+    # define_writer write_file, format 
+
+    # ######################################################
+
+    # macro define_method(name, content)
+    #     def {{name}}
+    #         {% if content == 1 %}
+    #             "one"
+    #         {% elsif content == 2 %}
+    #             "two"
+    #         {% else %}
+    #             {{content}}
+    #         {% end %}
+    #     end
+    # end
