@@ -11,51 +11,45 @@ module Double::U
   # the languages design and interactions with SQLite and Elixir.
   
   class LaunchRepl
-    SQL = SQLSetup.new
-    DB = DB.open "sqlite3://.main.db"
 
-    def open
-        puts SQL
+    def launch
         option_parser = OptionParser.parse do |parser|
           parser.banner = "* * * * D O U B L E - U * * * *"
         
-            parser.on "-v", "--version", "Show version" do
-                puts VERSION
-                exit
-            end
-
-            parser.on "-h", "--help", "Show help" do
-                puts parser
-                exit
-            end
-
-            parser.missing_option do |option_flag|
-                STDERR.puts "ERROR: #{option_flag} is missing something."
-                STDERR.puts ""
-                STDERR.puts parser
-                exit(1)
-            end
-
-            parser.invalid_option do |option_flag|
-                STDERR.puts "ERROR: #{option_flag} is not a valid option."
-                STDERR.puts parser
-                exit(1)
-            end
+          parser.on "-v", "--version", "Show version" do
+              puts VERSION
+              exit
           end
 
-          # Init events DB open
-          SQL.open_command_events_db()
+          parser.on "-h", "--help", "Show help" do
+              puts parser
+              exit
+          end
 
-    end
+          parser.missing_option do |option_flag|
+              STDERR.puts "ERROR: #{option_flag} is missing something."
+              STDERR.puts ""
+              STDERR.puts parser
+              exit(1)
+          end
+
+          parser.invalid_option do |option_flag|
+              STDERR.puts "ERROR: #{option_flag} is not a valid option."
+              STDERR.puts parser
+              exit(1)
+          end
+        end
+
+      end #launch
 
     def loop
         # NOTE: Build the idea of a command into a flexible
         # class using macros. For instance, the variables defined
         # as is below will be it's own command or entity type.
         # 
-        db = SQL.open_command_events_db()
-        puts db
 
+        # TODO: every command or block is a functional map
+        # make this a structure
         line = 0
         errors = [] of String
         previous_command = ""
@@ -73,12 +67,8 @@ module Double::U
             current_command = gets
             
             puts "Received current command: #{ current_command }"
-            puts "Previous command was: #{ previous_command }"
-
-            SQL.write_command_event("REPL", line, current_command, current_return)
-  
+            puts "Previous command was: #{ previous_command }"  
         end
-
     end
 
   end # !LaunchREPL
@@ -101,6 +91,9 @@ module Double::U
   # to interact with the runtime database, where generated data
   # is passed to ELixir then to the databse system.
   # 
+  # NOTE - TODO: None of this matters because first I need
+  # to use a persistent connection or pools of multiple connections.
+  # 2nd a db command entry should align with a command Type/Structure
   class SQLSetup
 
     def open_command_events_db 
@@ -136,7 +129,5 @@ module Double::U
 
   repl.open()
   repl.loop()
-
-
 
 end #!module

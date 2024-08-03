@@ -80,6 +80,25 @@ of data manipulation tasks.
 
 3. Integrate Elixir for the basic file read/writes.
 
+*** Aug 3, 2024
+
+- Okay, upon further deep dives into the Crystal programming language,
+  I realize that there are features, and idioms of the language
+  and functional programming that I'm just now starting to see, and how
+  I can compose double-u's design in a different way than I imagined.
+
+- Steps now: 
+    -- Get a SQLite connection pools use / reuse set up
+    -- Start parsing simple commands that generate code
+    -- Start finding ways to use the DB runtime with Elixir
+       as an 'Application Runner/Manager'
+
+    double-u commands -> translate to Crystal macros -> 
+        -> generates code -> compiles code -> user program
+        runs along side Elixir with SQLite as a powerful in between
+        runtime manager
+
+
 
 
 
