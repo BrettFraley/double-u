@@ -19,7 +19,13 @@ Start with writing to files and string processing, and interpretting a .wlang fi
 
 Syntax Ideas:
 
-w .txt.out => hello world
+Task     | Format or Data Type | Operation
+---------  -------------------  --------------  
+| Write  |    TEXT | String    |   OUT | Print
+    w            .txt                .out
+
+w.txt hello world
+
 w .txt.file hello world => hello.txt
 w .json.from[src] => resp
 w .json.to

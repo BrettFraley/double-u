@@ -1,11 +1,16 @@
 require "option_parser"
 
-require "./tokens"
 require "./w-db/db"
+require "./w-internals/w-utils"
+require "./w-internals/w-lang"
+
+DEBUG = W::Utils::Debug.new
+puts DEBUG
+puts W_TOKENS[:w]
 
 module Double::U
   VERSION = "0.1.0"
-
+  
   # LaunchREPL contains methods to initialize the REPL,
   # options parsing, basic command interpretter, and interactive runtime.
 
@@ -16,6 +21,7 @@ module Double::U
     def initialize()
       @db = WDB.new(:command_event, "test")
       @sql = @db.connection()
+      DEBUG.info
     end
 
     def launch
@@ -78,7 +84,11 @@ module Double::U
             puts "Command Events:"
       
             results = @sql.exec("select * from events")
-            puts results
+      
+            @sql.query_each "select * from events" do |rs|
+              puts "#{rs.read}, #{rs.read}, #{rs.read}, #{rs.read}"
+            end
+
         end
     end
 
