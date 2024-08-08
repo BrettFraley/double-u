@@ -5,6 +5,16 @@
 An extrememly simple I/O based domain language, where W means 'write', to write output..
 to file, to stream, to json, to html.. etc.
 
+-----------------------------------
+UPDATE: (a couple of weeks after research and 'realizing' the niche of this DSL)
+When it comes to concurrency and parallelism, I've realized that what I've imagined
+is called 'sublinear algorithms' - to break tasks / jobs into segments of work that
+can be each be executed in constant time. This comes from the ADB research project 
+from the publication "Sublinear Computation Paradigm" -- reminder to give accredidation ..
+These concepts, and family of 'property based testing' algorithms will guide and drive
+the development and implementation of Double-U.
+
+-----------------------------------
 Organization:
 If writing in Crystal..it needs modularized, and possibly use other languages
 as well for special functionality (eg: extra scripting capability for tooling).
